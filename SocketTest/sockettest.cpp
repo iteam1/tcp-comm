@@ -9,7 +9,7 @@ void SocketTest::Connect(){
 
     socket = new QTcpSocket(this);
 
-    socket->connectToHost("google.com",80);
+    socket->connectToHost("127.0.0.1",1234);
 
     if(socket->waitForConnected(3000)){
         qDebug() << "Connected!";
