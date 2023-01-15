@@ -1,0 +1,36 @@
+#include "sockettest.h"
+
+SocketTest::SocketTest(QObject *parent) : QObject(parent)
+{
+
+}
+
+void SocketTest::Connect(){
+
+    socket = new QTcpSocket(this);
+
+    socket->connectToHost("google.com",80);
+
+    if(socket->waitForConnected(3000)){
+        qDebug() << "Connected!";
+
+        //send
+        socket->write("hello server\r\n");
+
+        socket->waitForBytesWritten(1000);
+
+        //read
+        socket->waitForReadyRead(3000) << socket->bytesAvailable();
+
+        qDebug() << "Reading:";
+
+        qDebug() << socket->readAll();
+
+        // closed
+        socket->close();
+
+    }
+    else{
+        qDebug() << "Not Connected!";
+    }
+}
